@@ -21,7 +21,7 @@ function* fetchInitialSongsSaga() {
         id: song.mbid || song.url, // Ensure each song has a unique ID
         name: song.name,
         artist: song.artist.name,
-        imageUrl: song.image[2]["#text"], // Small or medium image
+        imageUrl: song.image[2]["#text"], 
       }));
     yield put(fetchInitialSongsSuccess(songsWithImages));
   } catch (error) {
@@ -32,7 +32,7 @@ function* fetchInitialSongsSaga() {
 const fetchInitialSongsFromAPI = () =>
   axios.get(API_URL, {
     params: {
-      method: "chart.gettoptracks", // You can use other methods or specify a track search
+      method: "chart.gettoptracks", 
       api_key: API_KEY,
       format: "json",
     },

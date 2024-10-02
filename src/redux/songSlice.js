@@ -38,7 +38,7 @@ const songSlice = createSlice({
       state.loading = true;
     },
     fetchSongsSuccess: (state, action) => {
-      state.searchResults = action.payload;
+      state.searchResults = action.payload; // Update search results
       state.loading = false;
       state.error = null;
     },
@@ -46,12 +46,24 @@ const songSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    addSong: (state, action) => {
+    addSongRequest: (state) => {
+      state.loading = true;
+    },
+    addSongSuccess: (state, action) => {
       const songWithUniqueId = { ...action.payload, id: uuidv4() };
       state.list.push(songWithUniqueId);
       localStorage.setItem("playlist", JSON.stringify(state.list));
+      state.loading = false;
+      state.error = null;
     },
-    updateSong: (state, action) => {
+    addSongFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    updateSongRequest: (state) => {
+      state.loading = true;
+    },
+    updateSongSuccess: (state, action) => {
       const index = state.list.findIndex(
         (song) => song.id === action.payload.id
       );
@@ -59,10 +71,25 @@ const songSlice = createSlice({
         state.list[index] = action.payload;
         localStorage.setItem("playlist", JSON.stringify(state.list));
       }
+      state.loading = false;
+      state.error = null;
     },
-    deleteSong: (state, action) => {
+    updateSongFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    deleteSongRequest: (state) => {
+      state.loading = true;
+    },
+    deleteSongSuccess: (state, action) => {
       state.list = state.list.filter((song) => song.id !== action.payload);
       localStorage.setItem("playlist", JSON.stringify(state.list));
+      state.loading = false;
+      state.error = null;
+    },
+    deleteSongFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
     },
     clearSearchResults: (state) => {
       state.searchResults = [];
@@ -77,9 +104,15 @@ export const {
   fetchSongsRequest,
   fetchSongsSuccess,
   fetchSongsFailure,
-  addSong,
-  updateSong,
-  deleteSong,
+  addSongRequest,
+  addSongSuccess,
+  addSongFailure,
+  updateSongRequest,
+  updateSongSuccess,
+  updateSongFailure,
+  deleteSongRequest,
+  deleteSongSuccess,
+  deleteSongFailure,
   clearSearchResults,
 } = songSlice.actions;
 

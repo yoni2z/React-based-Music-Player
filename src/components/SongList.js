@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchInitialSongsRequest,
-  deleteSong,
-  updateSong,
+  deleteSongRequest,
+  updateSongRequest,
 } from "../redux/songSlice";
 
 const SongList = () => {
@@ -26,7 +26,7 @@ const SongList = () => {
 
   const handleSave = () => {
     if (editSong) {
-      dispatch(updateSong({ ...editSong, name: newName }));
+      dispatch(updateSongRequest({ ...editSong, name: newName }));
       setEditSong(null);
       setNewName("");
     }
@@ -80,7 +80,7 @@ const SongList = () => {
                     </button>
                     <button
                       className="btn btn-danger w-100"
-                      onClick={() => dispatch(deleteSong(song.id))}
+                      onClick={() => dispatch(deleteSongRequest(song.id))}
                     >
                       Delete
                     </button>

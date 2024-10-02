@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchSongsRequest,
   clearSearchResults,
-  addSong,
+  addSongRequest,
 } from "../redux/songSlice";
 import { debounce } from "lodash";
 
@@ -29,7 +29,7 @@ const Search = () => {
 
   const handleAddSong = useCallback(
     (song) => {
-      dispatch(addSong(song));
+      dispatch(addSongRequest(song));
     },
     [dispatch]
   );

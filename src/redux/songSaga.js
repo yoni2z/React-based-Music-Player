@@ -7,6 +7,15 @@ import {
   fetchSongsRequest,
   fetchSongsSuccess,
   fetchSongsFailure,
+  addSongRequest,
+  addSongSuccess,
+  addSongFailure,
+  updateSongRequest,
+  updateSongSuccess,
+  updateSongFailure,
+  deleteSongRequest,
+  deleteSongSuccess,
+  deleteSongFailure,
 } from "./songSlice";
 
 const API_KEY = "a3b112f30ba6be3619b58f897992df62";
@@ -21,7 +30,7 @@ function* fetchInitialSongsSaga() {
         id: song.mbid || song.url, // Ensure each song has a unique ID
         name: song.name,
         artist: song.artist.name,
-        imageUrl: song.image[2]["#text"], 
+        imageUrl: song.image[2]["#text"],
       }));
     yield put(fetchInitialSongsSuccess(songsWithImages));
   } catch (error) {
@@ -32,7 +41,7 @@ function* fetchInitialSongsSaga() {
 const fetchInitialSongsFromAPI = () =>
   axios.get(API_URL, {
     params: {
-      method: "chart.gettoptracks", 
+      method: "chart.gettoptracks",
       api_key: API_KEY,
       format: "json",
     },
@@ -57,7 +66,37 @@ const fetchSongsFromAPI = (query) =>
     },
   });
 
+function* addSongSaga(action) {
+  try {
+    // Simulate adding song to API or just update the local state
+    yield put(addSongSuccess(action.payload));
+  } catch (error) {
+    yield put(addSongFailure(error.message));
+  }
+}
+
+function* updateSongSaga(action) {
+  try {
+    // Simulate updating song in API or just update the local state
+    yield put(updateSongSuccess(action.payload));
+  } catch (error) {
+    yield put(updateSongFailure(error.message));
+  }
+}
+
+function* deleteSongSaga(action) {
+  try {
+    // Simulate deleting song from API or just update the local state
+    yield put(deleteSongSuccess(action.payload));
+  } catch (error) {
+    yield put(deleteSongFailure(error.message));
+  }
+}
+
 export function* songSaga() {
   yield takeEvery(fetchInitialSongsRequest.type, fetchInitialSongsSaga);
   yield takeEvery(fetchSongsRequest.type, fetchSongsSaga);
+  yield takeEvery(addSongRequest.type, addSongSaga);
+  yield takeEvery(updateSongRequest.type, updateSongSaga);
+  yield takeEvery(deleteSongRequest.type, deleteSongSaga);
 }

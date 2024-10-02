@@ -38,7 +38,7 @@ const songSlice = createSlice({
       state.loading = true;
     },
     fetchSongsSuccess: (state, action) => {
-      state.searchResults = action.payload; // Update search results
+      state.searchResults = action.payload; 
       state.loading = false;
       state.error = null;
     },

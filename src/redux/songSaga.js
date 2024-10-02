@@ -27,7 +27,7 @@ function* fetchInitialSongsSaga() {
     const songsWithImages = response.data.tracks.track
       .slice(0, 5)
       .map((song) => ({
-        id: song.mbid || song.url, // Ensure each song has a unique ID
+        id: song.mbid || song.url, // to make sure the music have unique id
         name: song.name,
         artist: song.artist.name,
         imageUrl: song.image[2]["#text"],
@@ -68,7 +68,6 @@ const fetchSongsFromAPI = (query) =>
 
 function* addSongSaga(action) {
   try {
-    // Simulate adding song to API or just update the local state
     yield put(addSongSuccess(action.payload));
   } catch (error) {
     yield put(addSongFailure(error.message));
@@ -77,7 +76,6 @@ function* addSongSaga(action) {
 
 function* updateSongSaga(action) {
   try {
-    // Simulate updating song in API or just update the local state
     yield put(updateSongSuccess(action.payload));
   } catch (error) {
     yield put(updateSongFailure(error.message));
@@ -86,7 +84,6 @@ function* updateSongSaga(action) {
 
 function* deleteSongSaga(action) {
   try {
-    // Simulate deleting song from API or just update the local state
     yield put(deleteSongSuccess(action.payload));
   } catch (error) {
     yield put(deleteSongFailure(error.message));
